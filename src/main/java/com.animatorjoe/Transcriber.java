@@ -38,23 +38,33 @@ class Transcriber {
                 TimeUnit.MILLISECONDS.sleep(5);
                 outputBox.sendKeys(s + "  ");
             }
-//            outputBox.sendKeys(str);
-//            outputBox.sendKeys(Keys.RETURN);
-//            outputBox.sendKeys("");
-//            ((JavascriptExecutor)driver).executeScript(String.format("document.getElementsByClassName(\"InputField\")[0].textContent = \"%s\"", str));
-//            outputBox.sendKeys(Keys.DELETE);
-//            outputBox.sendKeys(Keys.DELETE);
-//            outputBox.sendKeys(Keys.DELETE);
 
-            // report message
             System.out.printf("Wow look at you, you typed at %s words per minute.%n", driver.findElement(By.className("Indicator")).getText().split(": ")[1]);
+
+            // enter captcha challenge
+            WebElement enterChallenge = new WebDriverWait(driver, 8)
+                    .until(d -> d.findElement(By.xpath("//button[contains(text(),'Request Challenge')]")));
+            enterChallenge.click();
+
+            // solve captcha
+            WebElement captchaImages =  new WebDriverWait(driver, 8)
+                    .until(d -> d.findElement(By.className("images")));
+            List<WebElement> images = captchaImages.findElements(By.tagName("img"));
+
+            System.out.println("Found captcha images");
+            System.out.println(images);
+            for (WebElement img : images) {
+                System.out.println(img.getAttribute("src"));
+            }
+
+            // completion
 //            TimeUnit.SECONDS.sleep(3);
 //            ((JavascriptExecutor)driver).executeScript("window.open(\"https://youtu.be/6Dh-RL__uN4?t=38\")");
             TimeUnit.SECONDS.sleep(30);
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         } finally {
-            driver.quit();
+//            driver.quit();
         }
     }
 }

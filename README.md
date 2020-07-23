@@ -4,9 +4,9 @@ Auto Typer is a bot for the Berkeley [CS 61A typeracer clone](http://cats.cs61a.
 
 ## Features:
 
--[X] Automate Initial Typing
--[X] Trigger Captcha
--[ ] Solve Captcha
+- [X] Automate Initial Typing
+- [X] Trigger Captcha
+- [ ] Solve Captcha
 
 ## Why I'm Making This
 
