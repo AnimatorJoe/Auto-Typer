@@ -1,7 +1,6 @@
 package com.animatorjoe;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Transcriber {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         System.out.println("Let's get ready");
 
         WebDriver driver = new ChromeDriver();
@@ -26,23 +25,36 @@ class Transcriber {
             enter.click();
 
             // read input and write output
-            StringBuilder str = new StringBuilder();
+            String str = "";
             List<WebElement> elements = driver.findElement(By.className("Prompt")).findElements(By.className("Character"));
-            for (WebElement e : elements) { str.append(e.getText()); }
+            for (WebElement e : elements) { str += e.getText(); }
+            str = str.trim();
             System.out.printf("Typing Input: %s%n%n", str);
 
             WebElement outputBox = driver.findElement(By.className("InputField"));
             outputBox.click();
-            outputBox.sendKeys(str.toString());
+            String[] strList = str.split(" ");
+            for (String s : strList) {
+                TimeUnit.MILLISECONDS.sleep(5);
+                outputBox.sendKeys(s + "  ");
+            }
+//            outputBox.sendKeys(str);
+//            outputBox.sendKeys(Keys.RETURN);
+//            outputBox.sendKeys("");
+//            ((JavascriptExecutor)driver).executeScript(String.format("document.getElementsByClassName(\"InputField\")[0].textContent = \"%s\"", str));
+//            outputBox.sendKeys(Keys.DELETE);
+//            outputBox.sendKeys(Keys.DELETE);
+//            outputBox.sendKeys(Keys.DELETE);
 
-            // celebrate
+            // report message
             System.out.printf("Wow look at you, you typed at %s words per minute.%n", driver.findElement(By.className("Indicator")).getText().split(": ")[1]);
-            TimeUnit.SECONDS.sleep(3);
-            ((JavascriptExecutor)driver).executeScript("window.open(\"https://youtu.be/6Dh-RL__uN4?t=38\")");
-
+//            TimeUnit.SECONDS.sleep(3);
+//            ((JavascriptExecutor)driver).executeScript("window.open(\"https://youtu.be/6Dh-RL__uN4?t=38\")");
+            TimeUnit.SECONDS.sleep(30);
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
+        } finally {
+            driver.quit();
         }
-
     }
 }

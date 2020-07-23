@@ -2,7 +2,13 @@
 
 Auto Typer is a bot for the Berkeley [CS 61A typeracer clone](http://cats.cs61a.org/).
 
-## Why I Made This
+## Features:
+
+-[X] Automate Initial Typing
+-[X] Trigger Captcha
+-[ ] Solve Captcha
+
+## Why I'm Making This
 
 So I'm taking this cs class over the summer, and the TAs decide that it would be interesting to host a typeracer clone on the class website.
 
